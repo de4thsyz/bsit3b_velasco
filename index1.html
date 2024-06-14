@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+<!--DATA TABLES-->
+    <link rel="stylesheet" href="datatables/css/bootstrap.min.css">
+    <link rel="stylesheet" href="datatables/css/buttons.bootstrap5.css">
+    <link rel="stylesheet" href="datatables/css/dataTables.bootstrap5.css">
+
+</head>
+<body>
+
+
+    <!--DATA TABLES-->
+    
+       <div>
+        <h1>List of Appointments</h1>
+        <table id="example" class="table table-striped" style="width:100%">
+        
+          <thead>
+              <tr>
+                  <th>Event Date</th>
+                  <th>Time Start</th>
+                  <th>Time End</th>
+                  <th>Type of Event</th>
+                  <th>Event Organizer</th>
+                  <th>Incharge</th>
+                  <th>Reserved To:</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td>11-11-2024</td>
+                  <td>10:00 am</td>
+                  <td>13:00 pm</td>
+                  <td> Mass </td>
+                  <td>Ed Mon</td>
+                  <td>Father John</td>
+                  <td>Tanggol</td>
+              </tr>
+              <tr>
+                <td>09-12-2024</td>
+                <td>11:00 am</td>
+                <td>15:00 pm</td>
+                <td> Wedding </td>
+                <td>Emong</td>
+                <td>Father  Juan</td>
+                <td>Gol</td>
+            </tr>
+         
+          </tbody>
+          <tfoot>
+            <tr>
+                <th>Event Date</th>
+                <th>Time Start</th>
+                <th>Time End</th>
+                <th>Type of Event</th>
+                <th>Event Organizer</th>
+                <th>Incharge</th>
+                <th>Reserved To:</th>
+            </tr>
+          </tfoot>
+      </table>
+       </div>
+    
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Save
+</button>
+<!-- Button trigger sweetalert -->
+<button type="button" id="btnswal" class="btn btn-primary">  Delete
+</button>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Notification</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Double Check you inputs
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="doublecheck"> Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<footer>
+  <p style="text-align: center; font-size: 24px; background-color: black; color: white;" > &copy; 2024 Simple eCommerce Website. All rights reserved.</p>
+</footer>
+
+      <!--DATA TABLES-->
+      <script src="datatables/js/jquery-3.7.1.js"></script>
+      <script src="datatables/js/bootstrap.bundle.min.js"></script>
+      <script src="datatables/js/dataTables.js"></script>
+      <script src="datatables/js/dataTables.bootstrap5.js"></script>
+      <script src="datatables/js/dataTables.buttons.js"></script>
+      <script src="datatables/js/buttons.bootstrap5.js"></script>
+      <script src="datatables/js/jszip.min.js"></script>
+      <script src="datatables/js/pdfmake.min.js"></script>
+      <script src="datatables/js/vfs_fonts.js"></script>
+      <script src="datatables/js/buttons.html5.min.js"></script>
+      <script src="datatables/js/buttons.print.min.js"></script>
+      <script src="datatables/js/buttons.colVis.min.js"></script>
+      
+      <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"> </script>
+
+       <script> $(document).on('click', '#btnswal', function(){
+      swal({
+  title: "Are you sure?",
+  text: "Once deleted, you will not be able to recover this imaginary file!",
+  icon: "warning",
+  buttons: true,
+  dangerMode: true,
+})
+.then((willDelete) => {
+  if (willDelete) {
+    swal("Poof! Your imaginary file has been deleted!", {
+      icon: "success",
+    });
+  } else {
+    swal("Your imaginary file is safe!");
+  }
+       });
+      });
+    </script>
+
+      <script> $(document).on('click', '#doublecheck', function(){
+        swal("GOOD WORK",{ 
+          icon: "success",
+        });
+      });
+      </script>
+<!--Tool bar for tables-->
+  
+      <script>
+        new DataTable('#example', {
+        layout: {
+          topStart: {
+            buttons: ['copy', 'excel', 'pdf', 'colvis']
+          }
+          }
+        });
+  </script>
+
+
+</body>
+</html>

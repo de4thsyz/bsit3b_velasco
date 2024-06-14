@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 20px;
+        }
+        .product {
+          border: 1px solid #ccc;
+          padding: 10px;
+          margin-bottom: 10px;
+        }
+        .cart {
+          border: 1px solid #ccc;
+          padding: 10px;
+          margin-top: 20px;
+        }
+        #total {
+          font-weight: bold;
+        }
+      </style>
+    <link rel="stylesheet" href="bootstrap-5.3.2-dist/bootstrap-5.3.2-dist/css/bootstrap.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-success navbar-dark border-bottom border-body" data-bs-theme="dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">
+            <img src="church.jpeg" alt=""  width="90" height="90">
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="index.html" style="font-size: 25px; font-family: Georgia, 'Times New Roman', Times, serif;">Home</a>
+              </li>
+             
+              <li class="nav-item">
+                <a class="nav-link" href="login.html" style="font-size: 25px; font-family: Georgia, 'Times New Roman', Times, serif;">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="preview.colorlib.com\theme\bootstrap\contact-form-12" style="font-size: 25px; font-family: Georgia, 'Times New Roman', Times, serif;">Contact</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="about.html" style="font-size: 25px; font-family: Georgia, 'Times New Roman', Times, serif;">About</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 25px; font-family: Georgia, 'Times New Roman', Times, serif;">
+                  Events
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="index.html">Appointment</a></li>
+                  <li><a class="dropdown-item" href="merchandise.html">Merchandise</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+              </li>
+           
+            </ul>
+            <form class="d-flex" role="search">
+              <input class="form-control me-2 text-white" type="search" placeholder="Search" aria-label="Search" style="font-size: 20px; font-family: Georgia, 'Times New Roman', Times, serif;">
+              <button class="btn btn-outline-success text-white" type="submit" style="font-size: 25px; font-family: Georgia, 'Times New Roman', Times, serif;"> Search</button>
+          </form>
+          </div>
+        </div>
+      </nav>
+
+
+
+
+      
+
+  <div class="product">
+    <h1>Product Catalog  </h1>
+    <div>
+      <span><img src="ak47.jpg"> <h2>AK47 - ₱15000 </h2></span> 
+      
+      <button onclick="addToCart('AK47', 15000)">Add</button>
+    </div>
+
+    <div>
+      <span><img src="arma.jpg"><h2>M16A4 - ₱17500</h2></span>
+    </div>
+    <button onclick="addToCart('ARMALIGHT', 17500)">Add</button>
+   
+    <div>
+      <span><img src="pistol.jpg"><h2>PISTOL - ₱8000</h2></span>
+    </div>
+    <button onclick="addToCart('PISTOL', 8000)">Add</button>
+  </div>
+
+  <div class="cart">
+    <h2>Shopping Cart</h2>
+    <ul id="cartItems"></ul>
+    <div>Total: ₱<span id="total">0</span></div>
+    <button onclick="checkout()">Checkout</button>
+  </div>
+
+  <script>
+    var cart = [];
+    
+    function addToCart(productName, price) {
+      // Check if the product is already in the cart
+      var existingItem = cart.find(item => item.name === productName);
+      
+      if (existingItem) {
+        // If the product is already in the cart, increase its quantity
+        existingItem.quantity++;
+      } else {
+        // If the product is not in the cart, add it with quantity 1
+        cart.push({ name: productName, price: price, quantity: 1 });
+      }
+      
+      displayCart();
+    }
+    
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      displayCart();
+    }
+    
+    function updateQuantity(index, newQuantity) {
+      cart[index].quantity = newQuantity;
+      displayCart();
+    }
+    
+    function displayCart() {
+      var cartItemsElement = document.getElementById("cartItems");
+      var total = 0;
+      
+      cartItemsElement.innerHTML = "";
+      
+      cart.forEach(function(item, index) {
+        var li = document.createElement("li");
+        var input = document.createElement("input");
+        input.type = "number";
+        input.min = "1";
+        input.value = item.quantity;
+        input.onchange = function() {
+          updateQuantity(index, parseInt(this.value));
+        };
+        
+        li.textContent = item.name + " - $" + (item.price * item.quantity) + " ";
+        li.appendChild(input);
+        var removeButton = document.createElement("button");
+        removeButton.textContent = "Remove";
+        removeButton.onclick = function() {
+          removeFromCart(index);
+        };
+        li.appendChild(removeButton);
+        cartItemsElement.appendChild(li);
+        total += item.price * item.quantity;
+      });
+      
+      document.getElementById("total").textContent = total;
+    }
+    
+    function checkout() {
+      // Here you can implement logic for processing the checkout
+      alert("Checkout completed!");
+      // For simplicity, this example just displays an alert
+      // In a real system, you would handle payment processing and order confirmation
+    }
+  </script>
+
+
+<footer>
+    <p style="text-align: center; font-size: 24px; background-color: black; color: white;" > &copy; 2024 Simple eCommerce Website. All rights reserved.</p>
+  </footer>
+      <!-- Button trigger modal -->
+
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
+</body>
+</html>
